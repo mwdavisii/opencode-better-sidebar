@@ -61,7 +61,7 @@ jobs:
             const version = pkg.version
             if (!name || !version) continue
 
-            if (!name.startsWith("@streetturtle/opencode-")) {
+            if (!name.startsWith("@mwdavisii/opencode-")) {
               console.error(`Refusing to publish unexpected package name: ${name}`)
               process.exit(1)
             }

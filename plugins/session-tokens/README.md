@@ -1,8 +1,8 @@
-# @streetturtle/opencode-session-tokens
+# @mwdavisii/opencode-session-tokens
 
 OpenCode sidebar plugin for quick session token visibility.
 
-<img src="https://raw.githubusercontent.com/streetturtle/opencode-better-sidebar/main/assets/session-tokens-screenshot.png" alt="Session Tokens sidebar screenshot" width="520" />
+<img src="https://raw.githubusercontent.com/mwdavisii/opencode-better-sidebar/main/assets/session-tokens-screenshot.png" alt="Session Tokens sidebar screenshot" width="520" />
 
 ## What it shows
 

@@ -1,8 +1,8 @@
-# @streetturtle/opencode-context-progress
+# @mwdavisii/opencode-context-progress
 
 Compact context usage widget for the OpenCode sidebar.
 
-<img src="https://raw.githubusercontent.com/streetturtle/opencode-better-sidebar/main/assets/context-progress-screenshot.png" alt="Context Progress sidebar screenshot" width="520" />
+<img src="https://raw.githubusercontent.com/mwdavisii/opencode-better-sidebar/main/assets/context-progress-screenshot.png" alt="Context Progress sidebar screenshot" width="520" />
 
 ## What it shows
 

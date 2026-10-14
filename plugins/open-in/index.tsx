@@ -182,7 +182,7 @@ function View(props: {
 }
 
 export default Plugin.define({
-  id: "streetturtle.open-in",
+  id: "mwdavisii.open-in",
   async setup(ctx) {
     refreshIDEAvailability()
 

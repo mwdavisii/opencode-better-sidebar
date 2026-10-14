@@ -172,7 +172,7 @@ function View(props: { sessionID: string }) {
 }
 
 export default Plugin.define({
-  id: "streetturtle.session-tokens",
+  id: "mwdavisii.session-tokens",
   async setup(ctx) {
     // Sidebar position in V2 is determined by plugin enable order; explicit ordering is no longer supported.
     ctx.ui.slot({

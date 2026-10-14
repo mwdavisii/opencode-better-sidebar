@@ -1,4 +1,4 @@
-# @streetturtle/opencode-recap
+# @mwdavisii/opencode-recap
 
 One-click Markdown session recap in the OpenCode sidebar.
 
@@ -6,7 +6,7 @@ One-click Markdown session recap in the OpenCode sidebar.
 - Stays in the sidebar (does not pollute the chat thread)
 - Auto-clears after 3 new prompts to keep it fresh
 
-<img src="https://raw.githubusercontent.com/streetturtle/opencode-better-sidebar/main/assets/recap-screenshot.png" alt="Recap sidebar screenshot" width="520" />
+<img src="https://raw.githubusercontent.com/mwdavisii/opencode-better-sidebar/main/assets/recap-screenshot.png" alt="Recap sidebar screenshot" width="520" />
 
 ## Install
 

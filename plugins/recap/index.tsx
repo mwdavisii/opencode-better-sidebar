@@ -105,7 +105,7 @@ function View(props: { sessionID: string; onRecap: () => void }) {
 }
 
 export default Plugin.define({
-  id: "streetturtle.recap",
+  id: "mwdavisii.recap",
   async setup(ctx) {
     const recapOptions = ctx.options as RecapOptions | undefined
     let configuredRecapModel: ModelChoice | undefined

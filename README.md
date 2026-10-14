@@ -37,7 +37,7 @@ plugins are enabled. List them explicitly in `plugins` in that order to pin a la
 
 ## Plugin Pack
 
-- [`@streetturtle/opencode-open-in`](./plugins/open-in) - quick buttons to open the current session folder in Zed, VS Code, or Cursor.
-- [`@streetturtle/opencode-context-progress`](./plugins/context-progress)` - context usage progress bar with token usage, window limit, and spend.
-- [`@streetturtle/opencode-recap`](./plugins/recap) - one-click AI recap for the current session.
-- [`@streetturtle/opencode-session-tokens`](./plugins/session-tokens) - collapsible session token totals with per-model breakdown.
+- [`@mwdavisii/opencode-open-in`](./plugins/open-in) - quick buttons to open the current session folder in Zed, VS Code, or Cursor.
+- [`@mwdavisii/opencode-context-progress`](./plugins/context-progress)` - context usage progress bar with token usage, window limit, and spend.
+- [`@mwdavisii/opencode-recap`](./plugins/recap) - one-click AI recap for the current session.
+- [`@mwdavisii/opencode-session-tokens`](./plugins/session-tokens) - collapsible session token totals with per-model breakdown.

@@ -1,15 +1,15 @@
 {
-  "name": "@streetturtle/opencode-context-progress",
+  "name": "@mwdavisii/opencode-context-progress",
   "version": "2.0.0",
   "description": "OpenCode V2 TUI sidebar plugin for context usage progress",
   "repository": {
     "type": "git",
-    "url": "https://github.com/streetturtle/opencode-better-sidebar",
+    "url": "https://github.com/mwdavisii/opencode-better-sidebar",
     "directory": "plugins/context-progress"
   },
-  "homepage": "https://github.com/streetturtle/opencode-better-sidebar/tree/main/plugins/context-progress",
+  "homepage": "https://github.com/mwdavisii/opencode-better-sidebar/tree/main/plugins/context-progress",
   "bugs": {
-    "url": "https://github.com/streetturtle/opencode-better-sidebar/issues"
+    "url": "https://github.com/mwdavisii/opencode-better-sidebar/issues"
   },
   "type": "module",
   "exports": {

@@ -123,7 +123,7 @@ function View(props: { sessionID: string }) {
 }
 
 export default Plugin.define({
-  id: "streetturtle.context-progress",
+  id: "mwdavisii.context-progress",
   async setup(ctx) {
     // V1 used `order: 100` here; V2 has no ordering field, so the sidebar
     // position is now determined by plugin enable order.
