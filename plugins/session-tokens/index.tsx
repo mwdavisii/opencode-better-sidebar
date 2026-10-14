@@ -1,6 +1,7 @@
 /** @jsxImportSource @opentui/solid */
 import { createMemo, createSignal, For, Show } from "solid-js"
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@opencode-ai/plugin/tui"
+import { Plugin, usePlugin } from "@opencode/plugin/tui"
+import type { SessionInfo, SessionMessageInfo } from "@opencode/client"
 
 const MAX_MODEL_ROWS = 10
 const INT_FORMATTER = new Intl.NumberFormat("en-US")
@@ -23,20 +24,11 @@ function hasNumeric(value: unknown): boolean {
   return false
 }
 
-function readCost(source: any): { value: number; present: boolean } {
-  const candidates = [
-    source?.cost,
-    source?.info?.cost,
-    source?.usage?.cost,
-    source?.metrics?.cost,
-  ]
-
-  for (const candidate of candidates) {
-    if (hasNumeric(candidate)) {
-      return {
-        value: safeNumber(candidate),
-        present: true,
-      }
+function readCost(cost: unknown): { value: number; present: boolean } {
+  if (hasNumeric(cost)) {
+    return {
+      value: safeNumber(cost),
+      present: true,
     }
   }
 
@@ -46,7 +38,9 @@ function readCost(source: any): { value: number; present: boolean } {
   }
 }
 
-function spentTokenCount(tokens: any): number {
+function spentTokenCount(
+  tokens?: { input?: unknown; output?: unknown; reasoning?: unknown; cache?: { write?: unknown } } | null,
+): number {
   const input = safeNumber(tokens?.input)
   const output = safeNumber(tokens?.output)
   const reasoning = safeNumber(tokens?.reasoning)
@@ -76,11 +70,14 @@ function shortModelLabel(label: string): string {
   return `${label.slice(0, 25)}...`
 }
 
-function View(props: { api: TuiPluginApi; sessionID: string }) {
+function View(props: { sessionID: string }) {
+  const ctx = usePlugin()
   const [open, setOpen] = createSignal(false)
-  const theme = () => props.api.theme.current
-  const messages = createMemo(() => props.api.state.session.messages(props.sessionID) as any[])
-  const session = createMemo(() => props.api.state.session.get(props.sessionID) as any)
+  const theme = () => ctx.theme
+  const messages = createMemo<SessionMessageInfo[]>(
+    () => ctx.data.session.message.list(props.sessionID) ?? [],
+  )
+  const session = createMemo<SessionInfo | undefined>(() => ctx.data.session.get(props.sessionID))
 
   const data = createMemo(() => {
     const tokenTotals = new Map<string, number>()
@@ -90,19 +87,17 @@ function View(props: { api: TuiPluginApi; sessionID: string }) {
     let hasBreakdownCost = false
     const seen = new Set<string>()
 
-    for (const message of messages()) {
-      const role = message?.role ?? message?.info?.role
-      if (role !== "assistant") continue
+    for (const m of messages()) {
+      if (m.type !== "assistant") continue
 
-      const messageID = message?.id
-      if (typeof messageID === "string" && seen.has(messageID)) continue
-      if (typeof messageID === "string") seen.add(messageID)
+      if (seen.has(m.id)) continue
+      seen.add(m.id)
 
-      const tokenCount = spentTokenCount(message?.tokens)
-      const messageCost = readCost(message)
+      const tokenCount = spentTokenCount(m.tokens)
+      const messageCost = readCost(m.cost)
       if (tokenCount <= 0 && !messageCost.present) continue
 
-      const modelID = message?.modelID ?? message?.info?.modelID ?? "unknown"
+      const modelID = m.model.id ?? "unknown"
 
       if (tokenCount > 0) {
         breakdownTokenTotal += tokenCount
@@ -125,7 +120,7 @@ function View(props: { api: TuiPluginApi; sessionID: string }) {
       .sort((a, b) => b.tokens - a.tokens || b.cost - a.cost)
 
     const sessionTokenTotal = spentTokenCount(session()?.tokens)
-    const sessionCost = readCost(session())
+    const sessionCost = readCost(session()?.cost)
     const totalTokens = breakdownTokenTotal > 0 ? breakdownTokenTotal : sessionTokenTotal
     const totalCost = hasBreakdownCost ? breakdownCostTotal : sessionCost.value
     const hasCost = hasBreakdownCost || sessionCost.present
@@ -148,27 +143,27 @@ function View(props: { api: TuiPluginApi; sessionID: string }) {
       <box>
         <box flexDirection="row" gap={1} onMouseDown={() => canExpand() && setOpen((x) => !x)}>
           <Show when={canExpand()}>
-            <text fg={theme().text}>{open() ? "▼" : "▶"}</text>
+            <text fg={theme().text.base}>{open() ? "▼" : "▶"}</text>
           </Show>
-          <text fg={theme().text}>
+          <text fg={theme().text.base}>
             <b>Session Tokens</b>
           </text>
-          <text fg={theme().textMuted}>{formatInt(data().totalTokens)}</text>
+          <text fg={theme().text.muted}>{formatInt(data().totalTokens)}</text>
           <Show when={data().hasCost}>
-            <text fg={theme().textMuted}> ({formatMoney(data().totalCost)})</text>
+            <text fg={theme().text.muted}> ({formatMoney(data().totalCost)})</text>
           </Show>
         </box>
 
         <Show when={canExpand() && open()}>
           <For each={data().perModel.slice(0, MAX_MODEL_ROWS)}>{(row) => (
             <box flexDirection="row">
-              <text fg={theme().textMuted}>{shortModelLabel(row.model)}</text>
+              <text fg={theme().text.muted}>{shortModelLabel(row.model)}</text>
               <box flexGrow={1} />
-              <text fg={theme().textMuted}>{formatModelTotals(row.tokens, row.cost, data().hasPerModelCost)}</text>
+              <text fg={theme().text.muted}>{formatModelTotals(row.tokens, row.cost, data().hasPerModelCost)}</text>
             </box>
           )}</For>
           <Show when={data().perModel.length > MAX_MODEL_ROWS}>
-            <text fg={theme().textMuted}>+{data().perModel.length - MAX_MODEL_ROWS} more</text>
+            <text fg={theme().text.muted}>+{data().perModel.length - MAX_MODEL_ROWS} more</text>
           </Show>
         </Show>
       </box>
@@ -176,20 +171,13 @@ function View(props: { api: TuiPluginApi; sessionID: string }) {
   )
 }
 
-const tui: TuiPlugin = async (api) => {
-  api.slots.register({
-    order: 120,
-    slots: {
-      sidebar_content(_ctx, props) {
-        return <View api={api} sessionID={props.session_id} />
-      },
-    },
-  })
-}
-
-const plugin: TuiPluginModule & { id: string } = {
+export default Plugin.define({
   id: "streetturtle.session-tokens",
-  tui,
-}
-
-export default plugin
+  async setup(ctx) {
+    // Sidebar position in V2 is determined by plugin enable order; explicit ordering is no longer supported.
+    ctx.ui.slot({
+      append: "sidebar.content",
+      render: (input) => <View sessionID={input.sessionID} />,
+    })
+  },
+})
