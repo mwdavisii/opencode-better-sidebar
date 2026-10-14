@@ -10,14 +10,30 @@ If this helps your workflow, please star the repo.
 
 ## Install
 
+Requires OpenCode V2.
+
 ```sh
-opencode plugin --global @streetturtle/opencode-open-in
-opencode plugin --global @streetturtle/opencode-context-progress
-opencode plugin --global @streetturtle/opencode-recap
-opencode plugin --global @streetturtle/opencode-session-tokens
+opencode plugin add @streetturtle/opencode-context-progress
+opencode plugin add @streetturtle/opencode-session-tokens
+opencode plugin add @streetturtle/opencode-open-in
+opencode plugin add @streetturtle/opencode-recap
 ```
 
-or from OpenCode, press <kbd>ctrl</kbd>+<kbd>p</kbd> -> "Install Plugin" -> "@streetturtle/opencode-open-in"
+### Sidebar order
+
+V2 removed the per-plugin slot `order` field, so sidebar sections now appear in the order the
+plugins are enabled. List them explicitly in `plugins` in that order to pin a layout:
+
+```jsonc
+{
+  "plugins": [
+    "@streetturtle/opencode-context-progress",
+    "@streetturtle/opencode-session-tokens",
+    "@streetturtle/opencode-open-in",
+    "@streetturtle/opencode-recap"
+  ]
+}
+```
 
 ## Plugin Pack
 
