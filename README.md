@@ -35,6 +35,28 @@ plugins are enabled. List them explicitly in `plugins` in that order to pin a la
 }
 ```
 
+## Local development (no publishing required)
+
+The plugins load straight from a checkout, and there is **no build step**: `exports["./tui"]`
+points at the `index.tsx` source, which OpenCode transpiles at load time.
+
+Point OpenCode at the plugin directories in `opencode.json(c)` — absolute paths are safest
+(relative paths resolve from the config file that contains them):
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    "/absolute/path/to/opencode-better-sidebar/plugins/context-progress",
+    "/absolute/path/to/opencode-better-sidebar/plugins/session-tokens",
+    "/absolute/path/to/opencode-better-sidebar/plugins/open-in",
+    "/absolute/path/to/opencode-better-sidebar/plugins/recap"
+  ]
+}
+```
+
+Then restart OpenCode (`opencode service restart`) and open a session.
+
 ## Plugin Pack
 
 - [`@mwdavisii/opencode-open-in`](./plugins/open-in) - quick buttons to open the current session folder in Zed, VS Code, or Cursor.

@@ -6,7 +6,6 @@
     "plugins/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces --if-present",
     "pack:dry": "npm run pack:dry --workspaces --if-present",
     "typecheck": "tsc -p tsconfig.json"
   },
