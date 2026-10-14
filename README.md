@@ -13,10 +13,10 @@ If this helps your workflow, please star the repo.
 Requires OpenCode V2.
 
 ```sh
-opencode plugin add @streetturtle/opencode-context-progress
-opencode plugin add @streetturtle/opencode-session-tokens
-opencode plugin add @streetturtle/opencode-open-in
-opencode plugin add @streetturtle/opencode-recap
+opencode plugin add 'github:mwdavisii/opencode-better-sidebar#main::path:plugins/context-progress'
+opencode plugin add 'github:mwdavisii/opencode-better-sidebar#main::path:plugins/session-tokens'
+opencode plugin add 'github:mwdavisii/opencode-better-sidebar#main::path:plugins/open-in'
+opencode plugin add 'github:mwdavisii/opencode-better-sidebar#main::path:plugins/recap'
 ```
 
 ### Sidebar order
@@ -27,10 +27,10 @@ plugins are enabled. List them explicitly in `plugins` in that order to pin a la
 ```jsonc
 {
   "plugins": [
-    "@streetturtle/opencode-context-progress",
-    "@streetturtle/opencode-session-tokens",
-    "@streetturtle/opencode-open-in",
-    "@streetturtle/opencode-recap"
+    "github:mwdavisii/opencode-better-sidebar#main::path:plugins/context-progress",
+    "github:mwdavisii/opencode-better-sidebar#main::path:plugins/session-tokens",
+    "github:mwdavisii/opencode-better-sidebar#main::path:plugins/open-in",
+    "github:mwdavisii/opencode-better-sidebar#main::path:plugins/recap"
   ]
 }
 ```

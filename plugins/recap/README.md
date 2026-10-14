@@ -11,7 +11,7 @@ One-click Markdown session recap in the OpenCode sidebar.
 ## Install
 
 ```sh
-opencode plugin add @streetturtle/opencode-recap
+opencode plugin add 'github:mwdavisii/opencode-better-sidebar#main::path:plugins/recap'
 ```
 
 Requires OpenCode V2.
@@ -37,7 +37,7 @@ You can override it by setting both `providerID` and `modelID` in the `plugins` 
 {
   "plugins": [
     {
-      "package": "@streetturtle/opencode-recap",
+      "package": "github:mwdavisii/opencode-better-sidebar#main::path:plugins/recap",
       "options": {
         "providerID": "github-copilot",
         "modelID": "gemini-3-flash-preview"

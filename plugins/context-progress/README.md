@@ -22,7 +22,7 @@ Compact context usage widget for the OpenCode sidebar.
 ## Install
 
 ```sh
-opencode plugin add @streetturtle/opencode-context-progress
+opencode plugin add 'github:mwdavisii/opencode-better-sidebar#main::path:plugins/context-progress'
 ```
 
 Requires OpenCode V2.
